@@ -9,11 +9,31 @@ import {
 
 import CategoryForm from "../CategoryForm/CategoryForm";
 
+interface CategoryDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  category?: {
+    name?: string;
+    slug?: string;
+    icon?: string;
+    description?: string;
+  } | null;
+}
+
 export default function CategoryDialog({
   open,
   onOpenChange,
   category,
-}: any) {
+}: CategoryDialogProps) {
+  const defaultValues = category
+    ? {
+        name: category.name,
+        slug: category.slug,
+        icon: category.icon,
+        description: category.description,
+      }
+    : undefined;
+
   return (
     <Dialog
       open={open}
@@ -30,8 +50,8 @@ export default function CategoryDialog({
         </DialogHeader>
 
         <CategoryForm
-          category={category}
-          onSuccess={() => onOpenChange(false)}
+          defaultValues={defaultValues}
+          onSubmit={() => onOpenChange(false)}
         />
 
       </DialogContent>

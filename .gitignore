@@ -17,6 +17,11 @@
 /.next/
 /out/
 
+# common build and cache artifacts
+/.turbo/
+/.eslintcache
+/dist/
+
 # production
 /build
 

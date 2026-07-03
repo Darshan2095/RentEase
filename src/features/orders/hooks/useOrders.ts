@@ -1,54 +1,60 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 
-import {useQuery} from "@tanstack/react-query";
+import { orderService } from "../services/order.service";
 
-import {
-orderService
-} from "../services/order.service";
+
+interface UseOrdersProps {
+
+  page?: number;
+
+  limit?: number;
+
+  status?: string;
+
+  search?: string;
+
+}
 
 
 export function useOrders({
 
-page=1,
-status="",
-search=""
+page = 1,
 
-}:{
+limit = 10,
 
+status = "",
 
-page?:number;
+search = "",
 
-status?:string;
-
-search?:string;
-
-
-}){
+}: UseOrdersProps = {}) {
 
 
 return useQuery({
 
-queryKey:[
+queryKey: [
 "orders",
 page,
+limit,
 status,
 search
 ],
 
 
-queryFn:()=>
-
+queryFn: () =>
 
 orderService.getOrders({
 
 page,
 
+limit,
+
 status,
 
-search
+search,
 
-})
+}),
 
 
 });

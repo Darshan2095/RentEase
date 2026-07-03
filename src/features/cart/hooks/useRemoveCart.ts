@@ -4,17 +4,34 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
+
 import { cartService } from "../services/cart.service";
 
+
 export function useRemoveCart() {
-  const queryClient = useQueryClient();
+
+  const queryClient =
+    useQueryClient();
+
 
   return useMutation({
-    mutationFn: cartService.removeCart,
 
-    onSuccess: () =>
+    mutationFn:
+    (productId:string)=>
+      cartService.removeItem(
+        productId
+      ),
+
+
+    onSuccess:()=>{
+
       queryClient.invalidateQueries({
-        queryKey: ["cart"],
-      }),
+        queryKey:["cart"],
+      });
+
+    },
+
+
   });
+
 }

@@ -1,62 +1,55 @@
 "use client";
 
 import Link from "next/link";
-
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   cart: any;
 }
 
 export default function CartSummary({ cart }: Props) {
-  const subtotal =
-    cart?.items?.reduce(
-      (total: number, item: any) =>
-        total +
-        item.monthlyRent * item.quantity,
-      0
-    ) || 0;
+  const subtotal = cart?.items?.reduce((total: number, item: any) => 
+    total + (item.monthlyRent * item.quantity), 0) || 0;
 
-  const deposit =
-    cart?.items?.reduce(
-      (total: number, item: any) =>
-        total + item.securityDeposit,
-      0
-    ) || 0;
+  const deposit = cart?.items?.reduce((total: number, item: any) => 
+    total + (item.securityDeposit * item.quantity), 0) || 0;
 
   const total = subtotal + deposit;
 
   return (
-    <Card className="space-y-4 p-6 sticky top-24">
+    <Card className="sticky top-24 space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h2 className="text-xl font-bold text-slate-900">Order Summary</h2>
 
-      <h2 className="text-xl font-semibold">
-        Order Summary
-      </h2>
-
-      <div className="flex justify-between">
-        <span>Monthly Rent</span>
-        <span>₹{subtotal}</span>
+      <div className="space-y-4">
+        <div className="flex justify-between text-sm text-slate-600">
+          <span>Monthly Rent</span>
+          <span className="font-medium text-slate-900">₹{subtotal.toLocaleString()}</span>
+        </div>
+        
+        <div className="flex justify-between text-sm text-slate-600">
+          <span>Security Deposit</span>
+          <span className="font-medium text-slate-900">₹{deposit.toLocaleString()}</span>
+        </div>
+        
+        <Separator className="bg-slate-100" />
+        
+        <div className="flex justify-between items-center text-lg font-bold text-slate-900">
+          <span>Total Due Today</span>
+          <span className="text-xl text-blue-600">₹{total.toLocaleString()}</span>
+        </div>
       </div>
 
-      <div className="flex justify-between">
-        <span>Security Deposit</span>
-        <span>₹{deposit}</span>
-      </div>
-
-      <hr />
-
-      <div className="flex justify-between text-lg font-bold">
-        <span>Total</span>
-        <span>₹{total}</span>
-      </div>
-
-      <Button asChild className="w-full">
+      <Button asChild className="h-12 w-full rounded-xl bg-blue-600 text-base font-semibold hover:bg-blue-700">
         <Link href="/checkout">
           Proceed to Checkout
         </Link>
       </Button>
 
+      <p className="text-center text-xs text-slate-400">
+        Secure payment processing. Renting is refundable.
+      </p>
     </Card>
   );
 }

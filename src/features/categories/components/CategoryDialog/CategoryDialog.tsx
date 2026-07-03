@@ -5,8 +5,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
-
 import CategoryForm from "../CategoryForm/CategoryForm";
 
 interface CategoryDialogProps {
@@ -25,35 +25,32 @@ export default function CategoryDialog({
   onOpenChange,
   category,
 }: CategoryDialogProps) {
-  const defaultValues = category
-    ? {
-        name: category.name,
-        slug: category.slug,
-        icon: category.icon,
-        description: category.description,
-      }
-    : undefined;
+  const isEditing = !!category;
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
-    >
-      <DialogContent>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {/* sm:max-w-lg keeps the form focused and prevents it from feeling too wide */}
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-
-          <DialogTitle>
-            {category ? "Edit Category" : "Add Category"}
+          <DialogTitle className="text-xl font-bold">
+            {isEditing ? "Edit Category" : "Add New Category"}
           </DialogTitle>
-
+          <DialogDescription>
+            {isEditing 
+              ? "Update the details for this category to reflect in the catalog." 
+              : "Create a new category to organize your rental products."}
+          </DialogDescription>
         </DialogHeader>
 
-        <CategoryForm
-          defaultValues={defaultValues}
-          onSubmit={() => onOpenChange(false)}
-        />
-
+        <div className="mt-4">
+          <CategoryForm
+            defaultValues={category || undefined}
+            onSubmit={(data) => {
+              console.log("Submitting:", data);
+              onOpenChange(false);
+            }}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );

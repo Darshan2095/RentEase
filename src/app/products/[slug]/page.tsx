@@ -1,17 +1,32 @@
-import { productService } from "@/features/products/services/product.service";
+import { notFound } from "next/navigation";
+
 import ProductGallery from "@/features/products/components/ProductGallery/ProductGallery";
 import ProductInfo from "@/features/products/components/ProductInfo/ProductInfo";
+import { connectDB } from "@/lib/mongodb";
+import Product from "@/models/Product";
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function ProductDetailsPage({
   params,
 }: Props) {
-  const product = await productService.getProduct(params.slug);
+  await connectDB();
+
+  const { slug } = await params;
+
+  const product = await Product.findOne({
+    slug,
+  })
+    .populate("category")
+    .lean();
+
+  if (!product) {
+    notFound();
+  }
 
   return (
     <div className="container py-10">

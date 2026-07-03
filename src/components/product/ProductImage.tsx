@@ -10,7 +10,7 @@ export default function ProductImage({ src, alt, className = "" }: ProductImageP
   return (
     <div className={`relative overflow-hidden bg-muted ${className}`}>
       <Image
-        src={src || "/placeholder.png"}
+        src={src || "/placeholder.jpg"}
         alt={alt}
         fill
         className="object-cover"

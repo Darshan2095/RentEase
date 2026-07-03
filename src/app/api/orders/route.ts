@@ -6,16 +6,25 @@ import { verifyToken } from "@/lib/jwt";
 import Cart from "@/models/Cart";
 import Order from "@/models/Order";
 
+import "@/models/User";
+import "@/models/Product";
+
 export async function POST(req: NextRequest) {
   await connectDB();
 
   const token = req.cookies.get("token")?.value;
 
-  if (!token)
-    return NextResponse.json(
-      { success: false },
-      { status: 401 }
-    );
+  if (!token) {
+  return NextResponse.json(
+    {
+      success:false,
+      message:"Unauthorized"
+    },
+    {
+      status:401
+    }
+  );
+}
 
   const payload: any = verifyToken(token);
 

@@ -11,7 +11,7 @@ export default function ProductGallery({
   images,
 }: Props) {
   const [selected, setSelected] = useState(
-    images?.[0] || "/placeholder.png"
+    images?.[0] || "/placeholder.jpg"
   );
 
   return (

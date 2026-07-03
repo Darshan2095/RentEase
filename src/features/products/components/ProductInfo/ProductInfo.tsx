@@ -11,11 +11,14 @@ interface Props {
 export default function ProductInfo({
   product,
 }: Props) {
+  const categoryName =
+    product.category?.name || product.category || "Category";
+
   return (
     <div className="space-y-6">
 
       <Badge>
-        {product.category}
+        {categoryName}
       </Badge>
 
       <h1 className="text-4xl font-bold">

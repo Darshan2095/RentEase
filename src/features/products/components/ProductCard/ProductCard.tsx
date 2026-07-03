@@ -16,13 +16,17 @@ interface ProductCardProps {
 export default function ProductCard({
   product,
 }: ProductCardProps) {
+  const categoryLabel =
+    product.category?.name || product.category || "Category";
+  const imageSrc = product.images?.[0] || "/placeholder.jpg";
+
   return (
     <Card className="overflow-hidden">
 
       <div className="relative h-60">
 
         <Image
-          src={"/placeholder.jpg"}
+          src={imageSrc}
           alt={product.name}
           fill
           className="object-cover"
@@ -39,7 +43,7 @@ export default function ProductCard({
       <CardContent className="space-y-3 p-4">
 
         <Badge variant="secondary">
-          {product.category}
+          {categoryLabel}
         </Badge>
 
         <h3 className="text-lg font-semibold">

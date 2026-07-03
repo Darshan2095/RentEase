@@ -1,80 +1,73 @@
 import api from "@/lib/api";
 
-export interface OrderFilters {
-  page?: number;
-  limit?: number;
-  search?: string;
-  status?: string;
-}
-
-export interface OrderAddress {
-  fullName: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  pincode: string;
-}
-
-export interface PlaceOrderPayload {
-  address: OrderAddress;
-}
 
 export const orderService = {
-  getOrders: async (filters: OrderFilters = {}) => {
-    const params = new URLSearchParams();
 
-    if (filters.page)
-      params.append("page", filters.page.toString());
 
-    if (filters.limit)
-      params.append("limit", filters.limit.toString());
+getOrders: async ({
+page=1,
+status="",
+search=""
+}:{
+page?:number;
+status?:string;
+search?:string;
+})=>{
 
-    if (filters.search)
-      params.append("search", filters.search);
 
-    if (
-      filters.status &&
-      filters.status !== "all"
-    ) {
-      params.append("status", filters.status);
-    }
+const {data}=await api.get(
+"/orders",
+{
+params:{
+page,
+status,
+search
+}
+}
+);
 
-    const { data } = await api.get(
-      `/orders?${params.toString()}`
-    );
 
-    return data;
-  },
+return data;
 
-  getOrder: async (id: string) => {
-    const { data } = await api.get(
-      `/orders/${id}`
-    );
 
-    return data.data;
-  },
+},
 
-  updateStatus: async (
-    id: string,
-    status: string
-  ) => {
-    const { data } = await api.patch(
-      `/orders/${id}/status`,
-      {
-        orderStatus: status,
-      }
-    );
 
-    return data;
-  },
 
-  placeOrder: async (payload: PlaceOrderPayload) => {
-    const { data } = await api.post(
-      "/orders",
-      payload
-    );
+getOrderById:async(
+id:string
+)=>{
 
-    return data;
-  },
+
+const {data}=await api.get(
+`/orders/${id}`
+);
+
+
+return data.data;
+
+},
+
+
+
+updateStatus:async(
+id:string,
+status:string
+)=>{
+
+
+const {data}=await api.patch(
+`/orders/${id}/status`,
+{
+orderStatus:status
+}
+);
+
+
+return data;
+
+
+}
+
+
 };

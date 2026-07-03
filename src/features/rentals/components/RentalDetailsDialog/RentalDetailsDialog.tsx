@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -22,12 +24,14 @@ export default function RentalDetailsDialog({
   onOpenChange,
   rental,
 }: Props) {
+  const [now] = useState(() => Date.now());
+
   if (!rental) return null;
 
-  const daysRemaining = Math.max(
+  const remainingDays = Math.max(
     0,
     Math.ceil(
-      (new Date(rental.endDate).getTime() - Date.now()) /
+      (new Date(rental.endDate).getTime() - now) /
         (1000 * 60 * 60 * 24)
     )
   );
@@ -228,7 +232,7 @@ export default function RentalDetailsDialog({
                   Remaining
                 </p>
 
-                <p>{daysRemaining} Days</p>
+                    <p>{remainingDays} Days</p>
 
               </div>
 

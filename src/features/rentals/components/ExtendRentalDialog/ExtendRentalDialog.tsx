@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Dialog,
@@ -42,13 +42,15 @@ export default function ExtendRentalDialog({
 
   const [months, setMonths] = useState("1");
 
-  useEffect(() => {
-    if (open) {
+  if (!rental) return null;
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
       setMonths("1");
     }
-  }, [open]);
 
-  if (!rental) return null;
+    onOpenChange(nextOpen);
+  };
 
   const handleSubmit = () => {
     mutation.mutate(
@@ -74,7 +76,7 @@ export default function ExtendRentalDialog({
   return (
     <Dialog
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
     >
       <DialogContent className="sm:max-w-md">
 

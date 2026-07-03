@@ -5,9 +5,11 @@ import { verifyToken } from "@/lib/jwt";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   await connectDB();
+
+  const { itemId } = await params;
 
   const token = req.cookies.get("token")?.value;
 
@@ -31,7 +33,7 @@ export async function PUT(
       { status: 404 }
     );
 
-  const item = cart.items.id(params.itemId);
+  const item = cart.items.id(itemId);
 
   if (!item)
     return NextResponse.json(
@@ -51,9 +53,11 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   await connectDB();
+
+  const { itemId } = await params;
 
   const token = req.cookies.get("token")?.value;
 
@@ -76,7 +80,7 @@ export async function DELETE(
     );
 
   cart.items = cart.items.filter(
-    (item: any) => item._id.toString() !== params.itemId
+    (item: any) => item._id.toString() !== itemId
   );
 
   await cart.save();

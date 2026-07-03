@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,38 +13,39 @@ export default function RentalCard({
 }: {
   rental: any;
 }) {
+  const [now] = useState(() => Date.now());
+
   const daysLeft = Math.max(
     0,
     Math.ceil(
       (new Date(rental.endDate).getTime() -
-        Date.now()) /
+        now) /
         (1000 * 60 * 60 * 24)
     )
   );
 
+  const imageSrc = rental.product?.images?.[0] || "/placeholder.jpg";
+  const imageAlt = rental.product?.name || "Rental product image";
+
   return (
     <Card className="overflow-hidden">
-
       <Image
-        src={rental.product.images[0]}
-        alt={rental.product.name}
+        src={imageSrc}
+        alt={imageAlt}
         width={500}
         height={300}
         className="h-52 w-full object-cover"
       />
 
       <div className="space-y-4 p-5">
-
         <div className="flex items-center justify-between">
-
           <h2 className="font-semibold">
-            {rental.product.name}
+            {rental.product?.name}
           </h2>
 
           <RentalStatusBadge
             status={rental.status}
           />
-
         </div>
 
         <p>
@@ -59,7 +62,6 @@ export default function RentalCard({
         <p>{daysLeft} days remaining</p>
 
         <div className="flex gap-2">
-
           <Button
             className="flex-1"
             variant="outline"
@@ -73,11 +75,8 @@ export default function RentalCard({
           >
             Return
           </Button>
-
         </div>
-
       </div>
-
     </Card>
   );
 }

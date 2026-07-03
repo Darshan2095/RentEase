@@ -13,18 +13,25 @@ export default function ProductsPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
-
-  const { data, isLoading } = useProducts({
-    page: 1,
-    limit: 12,
-  });
-
-  const products = data?.data ?? [];
   const [category, setCategory] = useState("all");
   const [featured, setFeatured] = useState("all");
   const [sort, setSort] = useState("-createdAt");
 
   const { data: categories = [] } = useCategories();
+
+  const productQueryFilters = {
+    page,
+    limit: 12,
+    search: debouncedSearch || undefined,
+    category: category === "all" ? undefined : category,
+    featured:
+      featured === "all" ? undefined : featured === "true",
+    sort,
+  };
+
+  const { data, isLoading } = useProducts(productQueryFilters);
+
+  const products = data?.data ?? [];
 
   if (isLoading) {
     return (
@@ -39,10 +46,7 @@ export default function ProductsPage() {
   return (
     <PublicLayout>
       <div className="container py-10">
-
         <div className="mb-8">
-         
-
           <h1 className="text-4xl font-bold">
             Rental Products
           </h1>
@@ -53,23 +57,36 @@ export default function ProductsPage() {
 
         </div>
 
-         <ProductFilters
-            search={search}
-            setSearch={setSearch}
-            category={category}
-            setCategory={setCategory}
-            featured={featured}
-            setFeatured={setFeatured}
-            sort={sort}
-            setSort={setSort}
-            categories={categories}
-          />
+        <ProductFilters
+          search={search}
+          setSearch={(value) => {
+            setPage(1);
+            setSearch(value);
+          }}
+          category={category}
+          setCategory={(value) => {
+            setPage(1);
+            setCategory(value);
+          }}
+          featured={featured}
+          setFeatured={(value) => {
+            setPage(1);
+            setFeatured(value);
+          }}
+          sort={sort}
+          setSort={(value) => {
+            setPage(1);
+            setSort(value);
+          }}
+          categories={categories}
+        />
 
-<ProductPagination
-    page={page}
-        totalPages={data?.pagination?.totalPages ?? 1}
-    onPageChange={setPage}
-/>
+        <ProductPagination
+          page={page}
+          totalPages={data?.pagination?.totalPages ?? 1}
+          onPageChange={setPage}
+        />
+
         <ProductGrid products={products} />
 
       </div>

@@ -7,13 +7,17 @@ import {
 
 import { toast } from "sonner";
 
-import { orderService } from "../services/order.service";
+import {
+  orderService,
+  type PlaceOrderPayload,
+} from "../services/order.service";
 
 export function usePlaceOrder() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: orderService.placeOrder,
+    mutationFn: (payload: PlaceOrderPayload) =>
+      orderService.placeOrder(payload),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

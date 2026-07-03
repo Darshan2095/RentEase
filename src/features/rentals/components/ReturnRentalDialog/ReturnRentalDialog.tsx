@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Dialog,
@@ -51,15 +51,17 @@ export default function ReturnRentalDialog({
 
   const [notes, setNotes] = useState("");
 
-  useEffect(() => {
-    if (open) {
+  if (!rental) return null;
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
       setDamageStatus("NONE");
       setDamageCharges(0);
       setNotes("");
     }
-  }, [open]);
 
-  if (!rental) return null;
+    onOpenChange(nextOpen);
+  };
 
   const handleSubmit = () => {
     mutation.mutate(
@@ -80,7 +82,7 @@ export default function ReturnRentalDialog({
   return (
     <Dialog
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
     >
       <DialogContent className="sm:max-w-lg">
 

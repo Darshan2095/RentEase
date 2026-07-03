@@ -7,6 +7,19 @@ export interface OrderFilters {
   status?: string;
 }
 
+export interface OrderAddress {
+  fullName: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
+export interface PlaceOrderPayload {
+  address: OrderAddress;
+}
+
 export const orderService = {
   getOrders: async (filters: OrderFilters = {}) => {
     const params = new URLSearchParams();
@@ -51,6 +64,15 @@ export const orderService = {
       {
         orderStatus: status,
       }
+    );
+
+    return data;
+  },
+
+  placeOrder: async (payload: PlaceOrderPayload) => {
+    const { data } = await api.post(
+      "/orders",
+      payload
     );
 
     return data;

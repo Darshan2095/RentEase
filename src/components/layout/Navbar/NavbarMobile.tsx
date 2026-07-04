@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, ShoppingCart, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { navItems } from "./navbar.data";
 
@@ -77,6 +77,28 @@ export default function NavbarMobile() {
 
         {/* Call to Actions Wrapper */}
         <div className="flex flex-col space-y-3 pt-6 mt-6 border-t border-slate-100">
+          <Button 
+            variant="outline" 
+            asChild 
+            className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <Link href="/cart" onClick={() => setOpen(false)}>
+              <ShoppingCart className="h-4 w-4" />
+              Cart
+            </Link>
+          </Button>
+
+          <Button 
+            variant="outline" 
+            asChild 
+            className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <Link href="/admin" onClick={() => setOpen(false)}>
+              <LayoutDashboard className="h-4 w-4" />
+              Admin
+            </Link>
+          </Button>
+
           <Button 
             variant="outline" 
             asChild 

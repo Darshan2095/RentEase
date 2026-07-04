@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X, ChevronRight, ShoppingCart, LayoutDashboard } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, ChevronRight, ShoppingCart, LayoutDashboard, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { navItems } from "./navbar.data";
 
 export default function NavbarMobile() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const pathname = usePathname();
 
   // Prevent background scrolling when mobile sheet drawer is open
@@ -22,6 +25,34 @@ export default function NavbarMobile() {
       document.body.style.overflow = "unset";
     };
   }, [open]);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/me", {
+          credentials: "include",
+        });
+
+        setIsAuthenticated(response.ok);
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/api/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    setIsAuthenticated(false);
+    setOpen(false);
+    router.refresh();
+    router.push("/");
+  };
 
   return (
     <div className="md:hidden">
@@ -99,24 +130,37 @@ export default function NavbarMobile() {
             </Link>
           </Button>
 
-          <Button 
-            variant="outline" 
-            asChild 
-            className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200"
-          >
-            <Link href="/login" onClick={() => setOpen(false)}>
-              Sign In
-            </Link>
-          </Button>
-          
-          <Button 
-            asChild 
-            className="w-full h-11 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-[#FFFFFF] font-medium shadow-md shadow-blue-500/10 transition-all duration-200"
-          >
-            <Link href="/register" onClick={() => setOpen(false)}>
-              Get Started
-            </Link>
-          </Button>
+          {!isCheckingAuth && (isAuthenticated ? (
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button 
+                variant="outline" 
+                asChild 
+                className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200"
+              >
+                <Link href="/login" onClick={() => setOpen(false)}>
+                  Sign In
+                </Link>
+              </Button>
+              
+              <Button 
+                asChild 
+                className="w-full h-11 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-[#FFFFFF] font-medium shadow-md shadow-blue-500/10 transition-all duration-200"
+              >
+                <Link href="/register" onClick={() => setOpen(false)}>
+                  Get Started
+                </Link>
+              </Button>
+            </>
+          ))}
         </div>
       </div>
     </div>

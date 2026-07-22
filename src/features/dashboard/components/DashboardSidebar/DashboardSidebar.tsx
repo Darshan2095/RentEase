@@ -39,12 +39,7 @@ const links = [
     name: "Profile",
     href: "/dashboard/profile",
     icon: User,
-  },
-  {
-    name: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
+  }
 ];
 
 export default function DashboardSidebar() {
@@ -76,11 +71,11 @@ export default function DashboardSidebar() {
             })}
           </nav>
         </div>
-        
+
         {/* CTA Frame for Desktop Only */}
         <div className="rounded-2xl bg-white border border-slate-200/60 p-4 shadow-sm/5">
           <p className="text-[11.5px] text-slate-400 font-medium mb-2">Premium Shield Cover</p>
-          <Link href="/dashboard/premium" className="text-[11.5px] font-bold text-blue-600 flex items-center">Learn more <ArrowUpRight className="h-3 w-3 ml-1"/></Link>
+          <Link href="/dashboard/premium" className="text-[11.5px] font-bold text-blue-600 flex items-center">Learn more <ArrowUpRight className="h-3 w-3 ml-1" /></Link>
         </div>
       </aside>
 
@@ -90,9 +85,9 @@ export default function DashboardSidebar() {
           const Icon = item.icon;
           const isActive = pathname === item.href;
           return (
-            <Link 
-              key={item.href} 
-              href={item.href} 
+            <Link
+              key={item.href}
+              href={item.href}
               className={cn(
                 "flex flex-col items-center justify-center gap-1 transition-colors",
                 isActive ? "text-blue-600" : "text-slate-400"

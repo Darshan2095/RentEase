@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, ChevronRight, ShoppingCart, LayoutDashboard, LogOut } from "lucide-react";
+import { Menu, X, ChevronRight, ShoppingCart, LayoutDashboard, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { navItems } from "./navbar.data";
 
@@ -124,8 +124,19 @@ export default function NavbarMobile() {
             asChild 
             className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2"
           >
-            <Link href="/admin" onClick={() => setOpen(false)}>
+            <Link href="/dashboard" onClick={() => setOpen(false)}>
               <LayoutDashboard className="h-4 w-4" />
+              Dashboard
+            </Link>
+          </Button>
+
+          <Button 
+            variant="outline" 
+            asChild 
+            className="w-full h-11 rounded-xl border-slate-200 text-[#111827] font-medium shadow-sm hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <Link href="/admin" onClick={() => setOpen(false)}>
+              <Shield className="h-4 w-4" />
               Admin
             </Link>
           </Button>

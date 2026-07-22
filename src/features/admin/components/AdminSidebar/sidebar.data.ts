@@ -4,7 +4,6 @@ import {
   Users,
   ShoppingCart,
   ClipboardList,
-  Settings,
 } from "lucide-react";
 
 export const sidebarItems = [
@@ -32,10 +31,5 @@ export const sidebarItems = [
     title: "Users",
     href: "/admin/users",
     icon: Users,
-  },
-  {
-    title: "Settings",
-    href: "/admin/settings",
-    icon: Settings,
-  },
+  }
 ];

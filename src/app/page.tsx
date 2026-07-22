@@ -1,15 +1,40 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, RefreshCw, Truck, ShieldCheck, Layers } from "lucide-react";
+import { ArrowRight, Sparkles, RefreshCw, Truck, ShieldCheck, Layers, Mail, Phone, MapPin, Clock, MessageSquare, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PublicLayout } from "@/components/layout/PublicLayout/PublicLayout";
 import Hero from "@/features/home/components/Hero";
 import Categories from "@/features/home/components/Categories";
 import Container from "@/components/layout/Container";
 import PageSection from "@/components/layout/PageSection";
+import { toast } from "sonner";
 
 export default function HomePage() {
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      // Simulate API submission call delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      toast.success("Thank you! Your message has been sent to our RentEase concierge team.");
+      setContactForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const steps = [
     {
       title: "Curate Workspace",
@@ -91,6 +116,162 @@ export default function HomePage() {
                 </div>
               );
             })}
+          </div>
+        </Container>
+      </PageSection>
+
+      {/* Contact Us Section */}
+      <PageSection id="contact" className="py-20 bg-white">
+        <Container className="space-y-16">
+          
+          {/* Section Heading */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-5xl mx-auto border-b border-slate-100 pb-8">
+            <div className="space-y-2">
+              <span className="text-[11px] font-mono font-bold tracking-widest text-blue-600 uppercase">
+                Get In Touch
+              </span>
+              <h2 className="text-3xl font-black text-slate-950 tracking-tight sm:text-4xl">
+                Contact Our Concierge
+              </h2>
+            </div>
+            <p className="text-[14.5px] text-slate-500 font-medium max-w-md leading-relaxed">
+              Have questions about subscriptions, active lease transfers, or customized layouts? Our team is available 24/7.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto items-stretch">
+            
+            {/* Info Cards Column */}
+            <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+              <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 space-y-8 flex-grow">
+                <div className="space-y-2">
+                  <h3 className="text-[18px] font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                    <MessageSquare className="h-5 w-5 text-blue-600" />
+                    Corporate HQ
+                  </h3>
+                  <p className="text-[13px] text-slate-400 font-medium leading-relaxed">
+                    Direct communications channels for support and enterprise solutions.
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Phone Item */}
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white border border-slate-200/60 rounded-2xl text-slate-700 shadow-sm/5 shrink-0">
+                      <Phone className="h-4.5 w-4.5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-[12px] font-bold text-slate-400 uppercase tracking-wide">Call support</h4>
+                      <p className="text-[14px] font-semibold text-slate-800 mt-0.5">+1 (800) RENT-EASE</p>
+                    </div>
+                  </div>
+
+                  {/* Email Item */}
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white border border-slate-200/60 rounded-2xl text-slate-700 shadow-sm/5 shrink-0">
+                      <Mail className="h-4.5 w-4.5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-[12px] font-bold text-slate-400 uppercase tracking-wide">Write to us</h4>
+                      <p className="text-[14px] font-semibold text-slate-800 mt-0.5">support@rentease.com</p>
+                    </div>
+                  </div>
+
+                  {/* Location Item */}
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white border border-slate-200/60 rounded-2xl text-slate-700 shadow-sm/5 shrink-0">
+                      <MapPin className="h-4.5 w-4.5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-[12px] font-bold text-slate-400 uppercase tracking-wide">Visit office</h4>
+                      <p className="text-[13.5px] font-semibold text-slate-800 mt-0.5">
+                        Suite 400, 100 Innovation Way<br />
+                        San Francisco, CA 94107
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Hours Item */}
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white border border-slate-200/60 rounded-2xl text-slate-700 shadow-sm/5 shrink-0">
+                      <Clock className="h-4.5 w-4.5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-[12px] font-bold text-slate-400 uppercase tracking-wide">Working hours</h4>
+                      <p className="text-[13.5px] font-semibold text-slate-800 mt-0.5">
+                        Mon – Fri: 9:00 AM – 6:00 PM PST
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form Column */}
+            <div className="lg:col-span-7 bg-white border border-slate-100 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
+              <form onSubmit={handleContactSubmit} className="space-y-5 flex flex-col h-full justify-between">
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[12.5px] font-bold text-slate-700">Full Name</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="John Doe"
+                        value={contactForm.name}
+                        onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-[13.5px] font-medium placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600/10 transition-all text-slate-800"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[12.5px] font-bold text-slate-700">Email Address</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="john@company.com"
+                        value={contactForm.email}
+                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-[13.5px] font-medium placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600/10 transition-all text-slate-800"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[12.5px] font-bold text-slate-700">Subject</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Rental agreement inquiry"
+                      value={contactForm.subject}
+                      onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                      className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-[13.5px] font-medium placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600/10 transition-all text-slate-800"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[12.5px] font-bold text-slate-700">Message</label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Type details of your request here..."
+                      value={contactForm.message}
+                      onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                      className="w-full p-4 rounded-xl border border-slate-200 bg-white text-[13.5px] font-medium placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600/10 transition-all resize-none text-slate-800"
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-500/10 active:scale-98 transition-all flex items-center justify-center gap-2 mt-4"
+                >
+                  <Send className="h-4 w-4" />
+                  <span>{isSubmitting ? "Sending message..." : "Send Message"}</span>
+                </Button>
+              </form>
+            </div>
+
           </div>
         </Container>
       </PageSection>

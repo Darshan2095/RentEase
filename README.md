@@ -1,11 +1,11 @@
-# 🏠 RentEase - Furniture & Appliance Rental Platform
+# RentEase - Furniture & Appliance Rental Platform
 
 RentEase is a full-stack rental management platform that allows users to rent furniture and home appliances online.  
 The platform provides a complete digital rental experience including product browsing, cart management, order processing, rental tracking, extensions, returns, and admin-side inventory management.
 
 ---
 
-## 📌 Overview
+##  Overview
 
 Buying furniture and appliances can be expensive for students, working professionals, and people relocating temporarily. RentEase solves this problem by providing a flexible rental platform where users can rent essential products based on their needs.
 
@@ -13,9 +13,9 @@ The system manages the complete rental lifecycle from product selection to order
 
 ---
 
-# 🚀 Features
+#  Features
 
-## 👤 Customer Features
+##  Customer Features
 
 ### Authentication
 - User registration
@@ -148,7 +148,7 @@ availableStock + quantity
 
 ---
 
-# 🧑‍💻 Tech Stack
+#  Tech Stack
 
 ## Frontend
 
@@ -198,7 +198,7 @@ Database
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```
 RentEase
@@ -244,7 +244,7 @@ src
 
 ---
 
-# 🔐 Authentication Flow
+#  Authentication Flow
 
 ```
 User Login
@@ -276,7 +276,7 @@ ADMIN
 
 ---
 
-# 📦 Main Modules
+#  Main Modules
 
 ## Product Module
 
@@ -336,7 +336,7 @@ Handles:
 
 ---
 
-# ⚙️ Installation Guide
+#  Installation Guide
 
 
 ## Clone Repository
@@ -413,7 +413,7 @@ npm start
 
 ---
 
-# 🌐 API Routes
+#  API Routes
 
 
 ## Authentication
@@ -478,7 +478,7 @@ PATCH /api/rentals/:id/return
 
 ---
 
-# 📱 Responsive Design
+#  Responsive Design
 
 Supported devices:
 
@@ -494,7 +494,7 @@ Features:
 
 ---
 
-# 🧪 Testing Completed
+#  Testing Completed
 
 Tested workflows:
 
@@ -510,7 +510,7 @@ Tested workflows:
 
 ---
 
-# 🚀 Future Enhancements
+#  Future Enhancements
 
 Planned improvements:
 
@@ -525,7 +525,7 @@ Planned improvements:
 
 ---
 
-# 📌 Project Status
+#  Project Status
 
 Current Version:
 
@@ -544,7 +544,7 @@ Completed:
 
 ---
 
-# 👨‍💻 Developer
+#  Developer
 
 Developed by:
 
@@ -554,6 +554,6 @@ Full Stack Developer
 
 ---
 
-# ⭐ Support
+#  Support
 
 If you like this project, consider giving it a ⭐ on GitHub.
